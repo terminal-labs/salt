@@ -21,7 +21,8 @@ As a user on the target system with sudo priveleges, prepare the machine by crea
 sudo mkdir -p /opt/salt
 sudo chown $USER:$USER /opt/salt
 cd /opt/salt
-git clone <path>
+git clone https://github.com/terminal-labs/salt.git
+git checkout rhel6
 ```
 
 ### Installation
