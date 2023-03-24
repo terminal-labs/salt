@@ -3,16 +3,12 @@
 echo "Installing dependencies of Salt and Salt 3005 itself."
 
 DOWNLOADS=~/downloads
-
 mkdir -p $DOWNLOADS
-
 (
     cd $DOWNLOADS
-
     sudo yum -y install gcc openssl-devel bzip2-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel zlib-devel gcc-c++ readline-devel
 
     wget https://www.python.org/ftp/python/3.6.9/Python-3.6.9.tgz
-
     tar xzf Python-3.6.9.tgz
     (
         cd Python-3.6.9
@@ -54,12 +50,6 @@ mkdir -p $ETC/pki/{master,minion}
 
 find $ETC/ -type d -exec chmod 0755 {} +
 find $ETC/ -type f -exec chmod 0644 {} +
-
-# Create service scripts
-# cp $SALT/pkg/rpm/salt-master $ETC/
-# cp $SALT/pkg/rpm/salt-minion $ETC/
-# cp $SALT/pkg/rpm/salt-syndic $ETC/
-# cp $SALT/pkg/rpm/salt-api $ETC/
 
 echo "export PATH=$VENV:${PATH}" >> /root/.bashrc
 EOF
