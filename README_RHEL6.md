@@ -58,3 +58,15 @@ salt-minion -d
 ```
 
 will run the Salt minion as a daemon.
+
+Or, you can use `service` to control the Salt minion.
+
+```bash
+sudo service salt-minion start
+```
+
+likewise, the Salt minion service also has available the `status`, `stop`, and `restart` subcomands.
+
+### Starting on boot
+
+This installation configures the Salt minion to start on boot with `chkconfig`.

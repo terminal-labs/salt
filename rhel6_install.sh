@@ -52,4 +52,9 @@ find $ETC/ -type d -exec chmod 0755 {} +
 find $ETC/ -type f -exec chmod 0644 {} +
 
 echo "export PATH=$VENV:${PATH}" >> /root/.bashrc
+
+cp $SALT/pkg/rpm/salt-minion /etc/init.d/
+
+chkconfig salt-minion on
+
 EOF
