@@ -21,7 +21,7 @@ As a user on the target system with sudo priveleges, prepare the machine by crea
 sudo mkdir -p /opt/salt
 sudo chown $USER:$USER /opt/salt
 cd /opt/salt
-git clone https://github.com/terminal-labs/salt.git
+git clone https://github.com/terminal-labs/salt.git /opt/salt
 git checkout rhel6
 ```
 
@@ -51,7 +51,7 @@ master: 1.2.3.4
 
 ## Running the Salt Minion
 
-With the installation and configuration complete, the salt minion can be ran from the terminal with the `salt-minion` binary. For example,
+With the installation and configuration complete, the salt minion can be ran from the terminal with the `salt-minion` binary. For example, as the root user
 
 ```bash
 salt-minion -d
@@ -62,7 +62,7 @@ will run the Salt minion as a daemon.
 Or, you can use `service` to control the Salt minion.
 
 ```bash
-sudo service salt-minion start
+service salt-minion start
 ```
 
 likewise, the Salt minion service also has available the `status`, `stop`, and `restart` subcomands.
