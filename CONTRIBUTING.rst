@@ -8,7 +8,7 @@ in a number of ways:
 -  Use Salt and open well-written bug reports.
 -  Join a `working group <https://github.com/saltstack/community>`__.
 -  Answer questions on `irc <https://web.libera.chat/#salt>`__,
-   the `community Slack <https://join.slack.com/t/saltstackcommunity/shared_invite/zt-3av8jjyf-oBQ2M0vhXOhJpNpRkPWBvg>`__,
+   the `community Slack <https://via.vmw.com/salt-slack>`__,
    the `salt-users mailing
    list <https://groups.google.com/forum/#!forum/salt-users>`__,
    `Server Fault <https://serverfault.com/questions/tagged/saltstack>`__,
@@ -88,7 +88,7 @@ version of Python:
 
 ::
 
-   pyenv install 3.7.0
+   pyenv install 3.9.18
 
 If that fails, don't panic! You're probably just missing some build
 dependencies. Check out `pyenv common build
@@ -99,7 +99,7 @@ new virtual environment with this command:
 
 ::
 
-   pyenv virtualenv 3.7.0 salt
+   pyenv virtualenv 3.9.18 salt
 
 Then activate it:
 
@@ -321,8 +321,8 @@ documentation:
 
    ::
 
-       pyenv install 3.7.15
-       pyenv virtualenv 3.7.15 salt-docs
+       pyenv install 3.9.18
+       pyenv virtualenv 3.9.18 salt-docs
        echo 'salt-docs' > .python-version
 
 #. Activate `pyenv` if it's not auto-activated:
@@ -477,7 +477,7 @@ meaningful and complete! *Typically* the best tests for Salt are going
 to be unit tests. Testing is `a whole topic on its
 own <https://docs.saltproject.io/en/master/topics/tutorials/writing_tests.html>`__,
 But you may also want to write functional or integration tests. You'll
-find those in the ``salt/tests`` directory.
+find those in the ``tests/`` directory.
 
 When you're thinking about tests to write, the most important thing to
 keep in mind is, “What, exactly, am I testing?” When a test fails, you
@@ -513,7 +513,7 @@ Now you can run your tests:
 
 ::
 
-   python -m nox -e "pytest-3.7(coverage=False)" -- tests/unit/cli/test_batch.py
+   python -m nox -e "test-3(coverage=False)" -- tests/unit/cli/test_batch.py
 
 It's a good idea to install
 `espeak <https://github.com/espeak-ng/espeak-ng>`__ or use ``say`` on
@@ -522,9 +522,29 @@ this:
 
 ::
 
-   python -m nox -e "pytest-3.7(coverage=False)" -- tests/unit/cli/test_batch.py; espeak "Tests done, woohoo!"
+   python -m nox -e "test-3(coverage=False)" -- tests/unit/cli/test_batch.py; espeak "Tests done, woohoo!"
 
 That way you don't have to keep monitoring the actual test run.
+
+
+::
+
+   python -m nox -e "test-3(coverage=False)" -- --core-tests
+
+You can enable or disable test groups locally by passing their respected flag:
+
+* --no-fast-tests - Tests that are ~10s or faster. Fast tests make up ~75% of tests and can run in 10 to 20 minutes.
+* --slow-tests - Tests that are ~10s or slower.
+* --core-tests - Tests of any speed that test the root parts of salt.
+* --flaky-jail - Test that need to be temporarily skipped.
+
+In your PR, you can enable or disable test groups by setting a label.
+All fast, slow, and core tests specified in the change file will always run.
+
+* test:no-fast
+* test:core
+* test:slow
+* test:flaky-jail
 
 
 Changelog and commit!
@@ -542,12 +562,12 @@ But that advice is backwards for the changelog. We follow the
 `keepachangelog <https://keepachangelog.com/en/1.0.0/>`__ approach for
 our changelog, and use towncrier to generate it for each release. As a
 contributor, all that means is that you need to add a file to the
-``salt/changelog`` directory, using the ``<issue #>.<type>`` format. For
-instanch, if you fixed issue 123, you would do:
+``salt/changelog`` directory, using the ``<issue #>.<type>.md`` format. For
+instance, if you fixed issue 123, you would do:
 
 ::
 
-   echo "Made sys.doc inform when no minions return" > changelog/123.fixed
+   echo "Made sys.doc inform when no minions return" > changelog/123.fixed.md
 
 And that's all that would go into your file. When it comes to your
 commit message, it's usually a good idea to add other information, such as
@@ -557,6 +577,9 @@ commit message, it's usually a good idea to add other information, such as
 
 This will also help you out, because when you go to create the PR it
 will automatically insert the body of your commit messages.
+
+See the `changelog <https://docs.saltproject.io/en/latest/topics/development/changelog.html>`__
+docs for more information.
 
 
 Pull request time!
